@@ -16,8 +16,8 @@ if(!pkg){
 	return;
 }
 
-// 配置
-cfg = pkg.pack || {
+// 默认配置
+cfg = extend({
 
 	// 根路径
 	root: './',
@@ -62,7 +62,7 @@ cfg = pkg.pack || {
 			'./**/*.html'
 		]
 	}
-};
+}, pkg.pack);
 
 // 监听代码
 gulp.task('watch', function() {
@@ -146,6 +146,13 @@ gulp.task('default', function(){
 // 取得相对路径
 function relative(path){
 	return '.' + path.replace(__dirname, '').replace(/\\/gm, '/');
+}
+
+function extend(dest, src){
+	for(var n in src) if(src.hasOwnProperty(n)){
+		dest[n] = src[n];
+	};
+	return dest;
 }
 
 exports.gulp = gulp;
