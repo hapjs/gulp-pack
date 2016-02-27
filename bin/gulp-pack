@@ -2,6 +2,12 @@
 
 'use strict';
 
+var st = new Date().getTime(),
+  showDuration = function(){
+    var d = (new Date().getTime() - st);
+    console.info('工具已启动，耗时 ' + d + ' 毫秒');
+  };
+
 var gulpfile = require('../gulpfile'),
     gulp = gulpfile.gulp,
     error = gulpfile.error,
@@ -51,7 +57,9 @@ function start(port) {
     // proxy: proxy
   };
 
-  gulp.start('default');
+  gulp.start('default', function(){
+    showDuration();
+  });
 }
 
 if (process.platform === 'win32') {
