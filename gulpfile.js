@@ -1,8 +1,8 @@
 var gulp = require('gulp'),
-	livereload = require('gulp-livereload'),
-	stylus = require('gulp-stylus'),
-	autoprefixer = require('gulp-autoprefixer'),
-	webserver = require('gulp-webserver'),
+	livereload,
+	stylus,
+	autoprefixer,
+	webserver,
 	cwd = process.cwd(),
 	pkg,
 	cfg;
@@ -43,6 +43,9 @@ cfg = pkg.pack || {
 	// 是否自动打开浏览器
 	open: false,
 
+	// 是否支持stylus
+	stylus: false,
+
 	// 要监控的各文件类型的路径
 	// 包含的内容越少，工具的启动速度越快，CPU性能消耗也越少
 	watch: {
@@ -66,38 +69,63 @@ gulp.task('watch', function() {
 
 	// 启动livereload服务
 	if(cfg.livereload){
+
+		if(!livereload){
+			livereload = require('gulp-livereload');
+		};
+
 		livereload.listen(cfg.livereload);
-	};
 	
-	// 监听js和html，改动后刷新页面
-	gulp.watch(cfg.watch.js.concat(cfg.watch.html), function(file) {
-		livereload.reload(file.path);
-	});
+		// 监听js和html，改动后刷新页面
+		gulp.watch(cfg.watch.js.concat(cfg.watch.html), function(file) {
+			livereload.reload(file.path);
+		});
 
-	// 监听css，改动后自动添加CSS前缀，然后刷新页面的link
-	gulp.watch(cfg.watch.css, function(file) {
-		gulp.src([relative(file.path)], {
-			base: cfg.root
-		}).pipe(autoprefixer({
-				browsers: cfg.autoprefixer,
-				cascade: false
-			}))
-			.pipe(gulp.dest(cfg.root));
-		//
-		livereload.changed(file.path);
-	});
+		// 监听css，改动后自动添加CSS前缀，然后刷新页面的link
+		gulp.watch(cfg.watch.css, function(file) {
+			//
+			if(!autoprefixer){
+				autoprefixer = require('gulp-autoprefixer');
+			};
+			//
+			gulp.src([relative(file.path)], {
+				base: cfg.root
+			}).pipe(autoprefixer({
+					browsers: cfg.autoprefixer,
+					cascade: false
+				}))
+				.pipe(gulp.dest(cfg.root));
+			//
+			livereload.changed(file.path);
+		});
+	};
 
-	// 监听styl文件，改动后自动编译为css文件
-	gulp.watch([cfg.watch.stylus], function(file) {
-		gulp.src([relative(file.path)], {
-			base: cfg.root
-		}).pipe(stylus())
-			.pipe(gulp.dest(cfg.root));
-	});
+	if(cfg.stylus){
+		// 监听styl文件，改动后自动编译为css文件
+		gulp.watch([cfg.watch.stylus], function(file) {
+			//
+			if(!stylus){
+				stylus = require('gulp-stylus');
+			};
+			//
+			gulp.src([relative(file.path)], {
+				base: cfg.root
+			}).pipe(stylus())
+				.pipe(gulp.dest(cfg.root));
+		});
+	};
+
 });
 
 // 启动一个Web服务器
 gulp.task('server', function() {
+
+	if(cfg.webserver === false){
+		return;
+	};
+
+	webserver = require('gulp-webserver');
+
 	gulp.src(cfg.root)
 		.pipe(webserver({
 			// 服务器端口
@@ -110,7 +138,10 @@ gulp.task('server', function() {
 });
 
 // 默认任务，在命令行中输入gulp后回车
-gulp.task('default', ['server', 'watch']);
+gulp.task('default', function(){
+	gulp.start('server');
+	gulp.start('watch');
+});
 
 // 取得相对路径
 function relative(path){
