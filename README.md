@@ -35,7 +35,8 @@ pack
 * livereload    ---- 自动刷新页面，关闭该项功能请设置false
 * autoprefixer  ---- 自动补全css属性前缀，关闭该项功能请设置false
 * open          ---- 是否在启动服务后自动打开浏览器，默认关闭
-* watch         ---- 要监控的各文件类型的路径
+* watch         ---- 要监控的各文件类型的路径，关闭该项功能请设置false
+* stylus        ---- 是否监听.styl类型的文件，默认关闭
 
 如果目录中还没有package.json文件，可在命令行中输入`npm init`，然后一直按回车即可自动生成。
 
@@ -47,6 +48,8 @@ pack
   "version": "1.0.0",
   "description": "",
   "author": "",
+
+
   "pack": {
     "root": "./client/",
     "http": 3001,
@@ -71,5 +74,7 @@ pack
       ]
     }
   }
+
+
 }
 ```
