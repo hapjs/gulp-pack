@@ -5,7 +5,8 @@ var gulp = require('gulp'),
 	webserver,
 	cwd = process.cwd(),
 	pkg,
-	cfg;
+	cfg,
+	log = console.log;
 
 try{
 	pkg = require(cwd + '/package.json');
@@ -77,9 +78,11 @@ gulp.task('watch', function() {
 		livereload.listen(cfg.livereload);
 	
 		// 监听js和html，改动后刷新页面
-		gulp.watch(cfg.watch.js.concat(cfg.watch.html), function(file) {
+		gulp.watch((cfg.watch.js || []).concat(cfg.watch.html || []), function(file) {
 			livereload.reload(file.path);
 		});
+
+		log('监控js和html');
 
 		// 监听css，改动后自动添加CSS前缀，然后刷新页面的link
 		gulp.watch(cfg.watch.css, function(file) {
@@ -98,6 +101,8 @@ gulp.task('watch', function() {
 			//
 			livereload.changed(file.path);
 		});
+
+		log('监控css');
 	};
 
 	if(cfg.stylus){
@@ -113,6 +118,8 @@ gulp.task('watch', function() {
 			}).pipe(stylus())
 				.pipe(gulp.dest(cfg.root));
 		});
+
+		log('开始监控stylus');
 	};
 
 });
