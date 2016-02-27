@@ -1,0 +1,74 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var gulpfile = require('../gulpfile'),
+    gulp = gulpfile.gulp,
+    error = gulpfile.error,
+    argv       = require('optimist')
+      .boolean('cors')
+      .argv;
+
+if(error){
+  console.log(error.red);
+  return;
+};
+
+if(!gulp){
+  return;
+};
+
+var port = argv.p || parseInt(process.env.PORT, 10);
+
+if (argv.h || argv.help) {
+  console.log([
+    'usage: gulp-pack [path] [options]',
+    '',
+    'options:',
+    '  -p           Port to use [3001]',
+    '  -h --help    Print this list and exit.',
+    '  -v --version Print version.'
+  ].join('\n'));
+  process.exit();
+}
+
+if (argv.v || argv.version) {
+  console.log(require('../package.json').version);
+  process.exit();
+}
+
+start(port);
+
+function start(port) {
+  var options = {
+    // root: argv._[0],
+    // cache: argv.c,
+    // showDir: argv.d,
+    // autoIndex: argv.i,
+    // robots: argv.r || argv.robots,
+    // ext: argv.e || argv.ext,
+    // logFn: logger.request,
+    // proxy: proxy
+  };
+
+  gulp.start('default');
+}
+
+if (process.platform === 'win32') {
+  require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  }).on('SIGINT', function () {
+    process.emit('SIGINT');
+  });
+}
+
+process.on('SIGINT', function () {
+  console.log('gulp-pack stopped.'.red);
+  process.exit();
+});
+
+process.on('SIGTERM', function () {
+  console.log('gulp-pack stopped.'.red);
+  process.exit();
+});

@@ -1,0 +1,31 @@
+{
+  "name": "gulp-pack",
+  "version": "0.0.4",
+  "description": "一个前端自动化工具",
+  "main": "gulp-pack",
+  "preferGlobal": "true",
+  "directories": {
+    "bin": "./bin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hapjs/gulp-pack.git"
+  },
+  "keywords": [
+    "cli",
+    "command"
+  ],
+  "scripts": {
+    "start": "node ./bin/gulp-pack"
+  },
+  "author": "hapjs",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-stylus": "^2.3.0",
+    "gulp-webserver": "^0.9.1",
+    "optimist": "^0.6.1"
+  }
+}
