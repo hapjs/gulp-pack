@@ -9,7 +9,7 @@ gulp-pack是为前端开发人员准备的一个自动化工具，实质上是�
 * 简易的服务器（webserver）
 * 页面自动刷新（livereload）
 * 自动补全CSS前缀（autoprefixer）
-* CSS预处理（stylus）
+* CSS预处理（stylus，默认不开启）
 
 ###第一步：安装（全局）
 
@@ -23,11 +23,11 @@ npm install -g gulp-pack
 在命令行中定位到Web文件所在的目录，然后执行如下代码：
 
 ```
-gulp-pack
+pack
 ```
 
 
-###配置
+###配置（可选）
 
 通过在package.json中加入pack属性，可以自定义以下选项：
 
