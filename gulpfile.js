@@ -4,18 +4,13 @@ var gulp = require('gulp'),
 	autoprefixer,
 	webserver,
 	cwd = process.cwd(),
-	pkg,
+	pkg = {},
 	cfg,
 	log = console.log;
 
 try{
-	pkg = require(cwd + '/package.json');
+	pkg = require(cwd + '/package.json') || {};
 }catch(e){};
-
-if(!pkg){
-	exports.error = 'package.json not found in ' + cwd;
-	return;
-}
 
 // 默认配置
 cfg = extend({
