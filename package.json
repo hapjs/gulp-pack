@@ -1,6 +1,6 @@
 {
   "name": "gulp-pack",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "全局的gulp工具集",
   "main": "gulp-pack",
   "preferGlobal": "true",
