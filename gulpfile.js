@@ -1,4 +1,8 @@
 var gulp = require('gulp'),
+	watch = require('gulp-watch'),
+  argv = require('optimist')
+    .boolean('cors')
+    .argv,
 	livereload,
 	stylus,
 	autoprefixer,
@@ -6,6 +10,7 @@ var gulp = require('gulp'),
 	cwd = process.cwd(),
 	pkg = {},
 	cfg,
+	root = argv._[0] || '',
 	log = console.log;
 
 try{
@@ -16,7 +21,7 @@ try{
 cfg = extend({
 
 	// 根路径
-	root: './',
+	root: root,
 
 	// http服务端口，关闭该项功能请设置false
 	http: 3001,
@@ -34,7 +39,7 @@ cfg = extend({
 	//    ['> 10%']
 	// 如果要支持所有浏览器，则指定：['> 0%']
 	// 参考：https://github.com/ai/browserslist
-	autoprefixer: ['> 0%'],
+	autoprefixer: false,
 
 	// 是否自动打开浏览器
 	open: false,
@@ -46,19 +51,61 @@ cfg = extend({
 	// 包含的内容越少，工具的启动速度越快，CPU性能消耗也越少
 	watch: {
 		js: [
-			'./**/*.js'
+			root + '/**/*.js'
 		],
 		css: [
-			'./**/*.css'
+			root + '/**/*.css'
 		],
 		stylus: [
-			'./**/*.styl'
+			root + '/**/*.styl'
 		],
 		html: [
-			'./**/*.html'
+			root + '/**/*.html'
 		]
 	}
 }, pkg.pack);
+
+cfg.watch = cfg.watch || [];
+
+// 排除node_modules目录
+(function(){
+	var name, files;
+	for(name in cfg.watch) if(cfg.watch.hasOwnProperty(name)){
+		files = cfg.watch[name] || [];
+		if(!files.length){
+			continue;
+		};
+		cfg.watch[name] = files.concat([
+			'!node_modules/'
+		]);
+	};
+}());
+
+// 从命令行参数中取得http端口号
+(function(){
+	var port = argv.p || argv.port;
+	if (!port) {
+	  return;
+	};
+	if(typeof cfg.http === 'object'){
+		cfg.http.port = port;
+	}else{
+		cfg.http = port;
+	};
+}());
+
+// 从命令行参数中取得livereload端口号
+(function(){
+	var port = argv.l || argv.livereload;
+	if (!port) {
+	  return;
+	};
+	if(typeof cfg.livereload === 'object'){
+		cfg.livereload.port = port;
+	}else{
+		cfg.livereload = port;
+	};
+}());
 
 // 监听代码
 gulp.task('watch', function() {
@@ -71,28 +118,32 @@ gulp.task('watch', function() {
 		};
 
 		livereload.listen(cfg.livereload);
-	
+
 		// 监听js和html，改动后刷新页面
-		gulp.watch((cfg.watch.js || []).concat(cfg.watch.html || []), function(file) {
+		watch((cfg.watch.js || []).concat(cfg.watch.html || []), function(file) {
 			livereload.reload(file.path);
 		});
 
 		log('监控js和html');
 
 		// 监听css，改动后自动添加CSS前缀，然后刷新页面的link
-		gulp.watch(cfg.watch.css, function(file) {
+		watch(cfg.watch.css, function(file) {
 			//
 			if(!autoprefixer){
 				autoprefixer = require('gulp-autoprefixer');
 			};
 			//
-			gulp.src([relative(file.path)], {
-				base: cfg.root
-			}).pipe(autoprefixer({
-					browsers: cfg.autoprefixer,
-					cascade: false
-				}))
-				.pipe(gulp.dest(cfg.root));
+			if(cfg.autoprefixer){
+				gulp.src([relative(file.path)], {
+					base: cfg.root
+				}).pipe(autoprefixer({
+						browsers: cfg.autoprefixer,
+						cascade: false
+					}))
+					.pipe(gulp.dest(cfg.root));
+
+				log('开启autoprefixer');
+			};
 			//
 			livereload.changed(file.path);
 		});
@@ -102,7 +153,7 @@ gulp.task('watch', function() {
 
 	if(cfg.stylus){
 		// 监听styl文件，改动后自动编译为css文件
-		gulp.watch([cfg.watch.stylus], function(file) {
+		watch(cfg.watch.stylus, function(file) {
 			//
 			if(!stylus){
 				stylus = require('gulp-stylus');

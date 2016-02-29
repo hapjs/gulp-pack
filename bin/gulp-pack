@@ -31,9 +31,10 @@ if (argv.h || argv.help) {
     'usage: gulp-pack [path] [options]',
     '',
     'options:',
-    '  -p           Port to use [3001]',
-    '  -h --help    Print this list and exit.',
-    '  -v --version Print version.'
+    '  -p               Port to use [3001]',
+    '  -l --livereload  Livereload Port to use [4001]',
+    '  -h --help        Print this list and exit.',
+    '  -v --version     Print version.'
   ].join('\n'));
   process.exit();
 }

@@ -1,7 +1,7 @@
 {
   "name": "gulp-pack",
-  "version": "0.0.8",
-  "description": "全局的gulp工具集",
+  "version": "0.0.9",
+  "description": "基于gulp的前端构建工具",
   "main": "gulp-pack",
   "preferGlobal": "true",
   "bin": {
@@ -26,6 +26,7 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-livereload": "^3.8.1",
     "gulp-stylus": "^2.3.0",
+    "gulp-watch": "^4.3.5",
     "gulp-webserver": "^0.9.1",
     "optimist": "^0.6.1"
   }
