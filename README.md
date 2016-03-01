@@ -20,20 +20,20 @@ gulp-pack会被安装在全局目录，而不是你的项目目录下。
 npm install -g gulp-pack
 ```
 
+国内因为网络原因偶尔会有安装不成功的问题，可以尝试以下方法安装
+```
+npm --registry https://registry.npm.taobao.org install -g gulp-pack
+```
+
 
 ###启动
 
 在命令行中定位到你的项目目录，然后执行如下代码：
 
 ```
-pack
+pack ./
 ```
 
-或者要也可以指定路径
-
-```
-pack pages/
-```
 
 然后会看到如下内容：
 ```
