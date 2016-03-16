@@ -1,41 +1,42 @@
-# gulp-pack
+# Gulp-pack
 
-针对前端开发过程中最常用的需求，我们把一系列gulp插件封装成为一个简单的命令。
+Gulp-pack is a plugin which combines some common gulp plugins to make front-end development easier.
 
-目前包含以下功能，以后还会继续增加:
+Gulp-pack can do these:
 
-* 简易的服务器（webserver）
-* 页面自动刷新（livereload）
-* 自动补全CSS前缀（autoprefixer，默认不开启）
-* CSS预处理（stylus，默认不开启）
+* simple webserver(webserver)
+* auto-refresh page in browser(livereload)
+* css auto prefix(autoprefixer)
+* css pretreatment(stylus)
 
-gulp-pack会被安装在全局目录，而不是你的项目目录下。
+*More plugins will be combined in the futrue.*
 
-也就是说，你的项目中不会出现令人讨厌的node_modules文件夹。
+## Install
 
-
-###安装（全局）
+Run terminal, and type code as below:
 
 ```
 npm install -g gulp-pack
 ```
 
-国内因为网络原因偶尔会有安装不成功的问题，可以尝试以下方法安装
+If your network is protected by the GFW, you may wanna try another command:
+
 ```
 npm --registry https://registry.npm.taobao.org install -g gulp-pack
 ```
 
+*Gulp-pack will be installed in global environment, which means, there won't be annoying node_modules folder in your project.*
 
-###启动
+## Run
 
-在命令行中定位到你的项目目录，然后执行如下代码：
+Run terminal, go to your project path, and type code as below:
 
 ```
 pack ./
 ```
 
+Then you will see comments like these:
 
-然后会看到如下内容：
 ```
 D:\Git\test>pack
 [10:28:49] Webserver started at http://localhost:3001
@@ -44,7 +45,9 @@ D:\Git\test>pack
 工具已就绪，耗时507毫秒
 ```
 
-###命令行参数
+It means gulp-pack is working.
+
+## Optional Parameters
 
 ```
 usage: gulp-pack [path] [options]
@@ -55,22 +58,22 @@ options:
   -v --version     Print version.
 ```
 
-###package.json配置（可选）
+## Extented package.json
 
-默认情况下，你并不需要进行配置。
+You can add properties is package.json to enable/disable some functions.
 
-通过在package.json中加入pack属性，可以自定义以下选项：
+| Property | Effect | Optional Config | Default | 
+|:--------:|:------:|:---------------:|:-------:|
+|http|web server port|true/false|true|
+|livereload|auto refresh page in browser|true/false|true|
+|autoprefixer|css auto prefix|true/false|true|
+|open|open browser when server starts|true/false|false|
+|stylus|monitor *.styl* files|true/false|true|
+|watch|file path to be monitored|*see samples as below*||
 
-* http          ---- 简易Web服务器的端口，关闭该项功能请设置false
-* livereload    ---- 自动刷新页面，关闭该项功能请设置false
-* autoprefixer  ---- 自动补全css属性前缀，关闭该项功能请设置false
-* open          ---- 是否在启动服务后自动打开浏览器，默认关闭
-* watch         ---- 要监控的各文件类型的路径，关闭该项功能请设置false
-* stylus        ---- 是否监听.styl类型的文件，默认关闭
+If you don't modify package.json, gulp-pack works under default configs.
 
-如果你的目录中还没有package.json文件，可在命令行中输入`npm init`，然后一直按回车即可自动生成。
-
-###示例：
+Here is a sample of package.json:
 
 ```
 {
