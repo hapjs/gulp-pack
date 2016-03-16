@@ -1,6 +1,6 @@
 {
   "name": "gulp-pack",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "基于gulp的前端构建工具",
   "main": "gulp-pack",
   "preferGlobal": "true",
