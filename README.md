@@ -40,9 +40,9 @@ Then you will see comments like these:
 ```
 D:\Git\test>pack
 [10:28:49] Webserver started at http://localhost:3001
-监控js和html
-监控css
-工具已就绪，耗时507毫秒
+watch .js .html
+watch .css
+507 ms to complete
 ```
 
 It means gulp-pack is working.

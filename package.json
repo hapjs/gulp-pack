@@ -1,7 +1,7 @@
 {
   "name": "gulp-pack",
-  "version": "0.0.12",
-  "description": "基于gulp的前端构建工具",
+  "version": "0.0.14",
+  "description": "a tools to make front-end development easier",
   "main": "gulp-pack",
   "preferGlobal": "true",
   "bin": {

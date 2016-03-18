@@ -5,7 +5,7 @@
 var st = new Date().getTime(),
   showDuration = function(){
     var d = (new Date().getTime() - st);
-    console.info('工具已就绪，耗时' + d + '毫秒');
+    console.info(d + ' ms to complete');
   };
 
 var gulpfile = require('../gulpfile'),

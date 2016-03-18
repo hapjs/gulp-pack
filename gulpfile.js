@@ -124,7 +124,7 @@ gulp.task('watch', function() {
 			livereload.reload(file.path);
 		});
 
-		log('监控js和html');
+		log('watch .js .html');
 
 		// 监听css，改动后自动添加CSS前缀，然后刷新页面的link
 		watch(cfg.watch.css, function(file) {
@@ -142,13 +142,13 @@ gulp.task('watch', function() {
 					}))
 					.pipe(gulp.dest(cfg.root));
 
-				log('开启autoprefixer');
+				log('autoprefixer');
 			};
 			//
 			livereload.changed(file.path);
 		});
 
-		log('监控css');
+		log('watch .css');
 	};
 
 	if(cfg.stylus){
@@ -165,7 +165,7 @@ gulp.task('watch', function() {
 				.pipe(gulp.dest(cfg.root));
 		});
 
-		log('开始监控stylus');
+		log('watch .styl');
 	};
 
 });
