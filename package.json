@@ -1,6 +1,6 @@
 {
   "name": "gulp-pack",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "a tools to make front-end development easier",
   "main": "gulp-pack",
   "preferGlobal": "true",

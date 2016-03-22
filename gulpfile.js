@@ -10,7 +10,7 @@ var gulp = require('gulp'),
 	cwd = process.cwd(),
 	pkg = {},
 	cfg,
-	root = argv._[0] || '',
+	root = argv._[0] || './',
 	log = console.log;
 
 try{
@@ -51,16 +51,16 @@ cfg = extend({
 	// 包含的内容越少，工具的启动速度越快，CPU性能消耗也越少
 	watch: {
 		js: [
-			root + '/**/*.js'
+			root + '**/*.js'
 		],
 		css: [
-			root + '/**/*.css'
+			root + '**/*.css'
 		],
 		stylus: [
-			root + '/**/*.styl'
+			root + '**/*.styl'
 		],
 		html: [
-			root + '/**/*.html'
+			root + '**/*.html'
 		]
 	}
 }, pkg.pack);
@@ -198,7 +198,7 @@ gulp.task('default', function(){
 
 // 取得相对路径
 function relative(path){
-	return '.' + path.replace(__dirname, '').replace(/\\/gm, '/');
+	return path.replace(__dirname, '').replace(/\\/gm, '/');
 }
 
 function extend(dest, src){
